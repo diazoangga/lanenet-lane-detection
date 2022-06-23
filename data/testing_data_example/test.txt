@@ -1,0 +1,3 @@
+D:\41_LaneNet_Own\github\data\training_data_example\gt_image\0_6861.png D:\41_LaneNet_Own\github\data\training_data_example\gt_binary_image\0_6861.png D:\41_LaneNet_Own\github\data\training_data_example\gt_instance_image\0_6861.png
+D:\41_LaneNet_Own\github\data\training_data_example\gt_image\0_6862.png D:\41_LaneNet_Own\github\data\training_data_example\gt_binary_image\0_6862.png D:\41_LaneNet_Own\github\data\training_data_example\gt_instance_image\0_6862.png
+D:\41_LaneNet_Own\github\data\training_data_example\gt_image\0_6863.png D:\41_LaneNet_Own\github\data\training_data_example\gt_binary_image\0_6863.png D:\41_LaneNet_Own\github\data\training_data_example\gt_instance_image\0_6863.png
