@@ -1,3 +1,2 @@
 # Lane Detection in CARLA Using BiSeNetV2
-This is a lane detection program implemented in CARLA Simulator. I utilized BiSeNetV2 (Bilateral Segmentation Network V2) developed by Changqian Yu et al as explained in their paper: https://arxiv.org/abs/2004.02147
-
+This is a lane detection program implemented in CARLA Simulator. This program detects lanes and segments each lane. I utilized BiSeNetV2 (Bilateral Segmentation Network V2) developed by Changqian Yu et al as explained in their paper: https://arxiv.org/abs/2004.02147 for the model architecture. For the dataset itself, it inputs a RGB image with the size of (256,512,3) and outputs a binary image consisting of lane or non lane pixels and a instance segmentation image that consist of area segmentation for each lane.
