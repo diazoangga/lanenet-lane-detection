@@ -11,6 +11,7 @@ import tensorflow as tf
 import tensorflow_addons as tfa
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.callbacks import TerminateOnNaN
@@ -81,11 +82,16 @@ else:
 # TRAIN THE MODEL
 print('Setting the training solver...')
 
+date_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+save_path = ops.join(save_path, date_time)
+if not ops.exists(save_path):
+    os.makedirs(save_path)
+
 # LossWeights = [1,1]
 # lr = tf.keras.callbacks.LearningRateScheduler(custom_lr)
 terminateNaN = TerminateOnNaN()
 early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=8)
-log_dir = "./logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "./logs/fit/" + date_time
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 tqdm_callback = tfa.callbacks.TQDMProgressBar()
 
@@ -122,6 +128,42 @@ history = model.fit(train_dataset,
                     validation_steps= int(np.floor(len(list(val_ds)) / val_batch_size)),
                     shuffle=False,
                    callbacks=[terminateNaN, tensorboard_callback, checkpoint, early_stop])
+
+model.save(ops.join(save_path, 'final.weights.h5'))
+np.save(os.path.join(save_path, 'history.npy'), history.history)
+
+def plot_result(save_dir, data1, data2, label1, label2, title):
+    x = [i for i in range(len(data1))]
+
+    save_fig_dir = os.path.join(save_dir, 'plot_fig')
+    if not os.path.exists(save_fig_dir):
+        os.makedirs(save_fig_dir)
+
+    plt.figure(figsize=(12,4))
+    plt.plot(x, data1, label=label1)
+    plt.plot(x, data2, label=label2)
+    plt.xlabel('Epoch')
+    plt.ylabel(title)
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(os.path.join(save_fig_dir, f'{title}.png'))
+
+train_loss_result = history.history['loss']
+train_focalloss_result = history.history['bise_net_v2_1_loss']
+train_instanceloss_result = history.history['bise_net_v2_1_1_loss']
+val_loss_result = history.history['val_loss']
+val_focalloss_result = history.history['val_bise_net_v2_1_loss']
+val_instanceloss_result = history.history['val_bise_net_v2_1_1_loss']
+train_acc_result = history.history['bise_net_v2_1_1_accuracy']
+val_acc_result = history.history['val_bise_net_v2_1_1_accuracy']
+train_iou_result = history.history['bise_net_v2_1_calculate_iou']
+val_iou_result = history.history['val_bise_net_v2_1_calculate_iou']
+
+plot_result(save_path, train_loss_result, val_loss_result, 'Training', 'Validation', 'Training and Validation Loss')
+plot_result(save_path, train_focalloss_result, val_focalloss_result, 'Training', 'Validation', 'Training and Validation Focal Loss')
+plot_result(save_path, train_instanceloss_result, val_instanceloss_result, 'Training', 'Validation', 'Training and Validation Instance Loss')
+plot_result(save_path, train_acc_result, val_acc_result, 'Training', 'Validation', 'Training and Validation Accuracy')
+plot_result(save_path, train_iou_result, val_iou_result, 'Training', 'Validation', 'Training and Validation IoU')
 
 # for idx, data in enumerate(val_ds):
 #     print(idx)
