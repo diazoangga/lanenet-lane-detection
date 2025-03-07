@@ -29,8 +29,8 @@ DATASET:
     NUM_CLASSES: 2
     MAX_NUM_SAMPLES: 10
     VAL_RATIO: 0.12
-    TEST_FILE_LIST: './data/training_data_example/test.txt'
-    TRAIN_FILE_LIST: './data/training/training/train.txt'
+    TEST_FILE_LIST: './data/testing_data_example/test.txt'
+    TRAIN_FILE_LIST: './data/training_data_example/train.txt'
     VAL_FILE_LIST: './data/training_data_example/val.txt'
 FREEZE:
     MODEL_FILENAME: 'model'
@@ -43,7 +43,7 @@ MODEL:
         GE_EXPAND_RATIO: 6
         SEMANTIC_CHANNEL_LAMBDA: 0.25
         SEGHEAD_CHANNEL_EXPAND_RATIO: 2
-    WEIGHT_PATH: './weights/lanenet_ckpt.epoch55-loss0.08.h5'
+    WEIGHT_PATH: './train_out/lanenet_ckpt.epoch03-loss11.49.h5'
 TEST:
     TEST_MODEL: 'model/cityscapes/final'
 TRAIN:
@@ -51,7 +51,7 @@ TRAIN:
     TBOARD_SAVE_DIR: 'tboard/tusimple/'
     MODEL_PARAMS_CONFIG_FILE_NAME: "model_train_config.json"
     RESTORE_FROM_CHECKPOINT:
-        ENABLE: True
+        ENABLE: False
         START_EPOCH: 5
         WEIGHT_PATH: './weights/lanenet_ckpt.epoch55-loss0.08.h5'
     SNAPSHOT_EPOCH: 8
