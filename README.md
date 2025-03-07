@@ -20,3 +20,17 @@ conda create -n lanenet python==3.9
 conda activate lanenet
 pip install -r requirements.txt
 ```
+
+# Training Output 
+The training output and records will be saved in the following structure:
+```
+/train_out
+└── (date and time)
+    ├── weight_epoch.weights.h5
+    ├── final.weights.h5
+    ├── history.npy
+    ├── plot_fig
+    │   ├── training and validation loss.png
+    │   ├── (other plots and metrics visualization)
+    └── (additional logs and records)
+```
