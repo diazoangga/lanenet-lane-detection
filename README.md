@@ -13,3 +13,10 @@ The model BiSeNetV2 that I used is shown on the figure below.
 The dataset that I used was images extracted from CARLA Simulator with Lane Detection Dataset Extractor that is developed by Github user, Glutamat42 (https://github.com/Glutamat42/Carla-Lane-Detection-Dataset-Generation). It extracts images needed for lane detection training: (1) RGB image for the input, (2) lane binary segmentation image and (3) instance segmentation image for the ground truth. Because it only allows to set the weather setting to be Clear Noon, I modified the code to be able to custom the weather setting. The dataset I used can be found on my google drive: ...().
 # Configuration
 You will be able to find 'lanenet.yml' consisting the configuration of how the dataset, training, and inference setting would do. The resize image is set to be [256, 512]
+
+# Installation
+```
+conda create -n lanenet python==3.9
+conda activate lanenet
+pip install -r requirements.txt
+```
