@@ -4,7 +4,9 @@ import numpy as np
 import onnxruntime as ort
 
 def preprocessing_img(img_path):
-    img = cv2.resize(img_path, [512,256])
+    img = cv2.imread(img_path)
+    print(img_path)
+    img = cv2.resize(img, [512,256])
     img = np.array(img).astype(np.float32)/255.0
     img = np.expand_dims(img, axis=0)
     return img
@@ -70,11 +72,12 @@ def inference_bisenetv2(imgRGB, bin_pred, inst_pred):
     return out_img, center_lane
 
 weights_path = "./carla_weight_onnx/model.onnx"
-image_path = './data/testing_data_example/gt_image/0.png'
+image_path = './data/testing_data_example/gt_image/0_6863.png'
 print(f'Built model with weights {weights_path}...')
 model = ort.InferenceSession(weights_path, providers=["CUDAExecutionProvider"])
 
-input_image = preprocessing_img(0, image_path)
+input_image = preprocessing_img(image_path)
+# print(image_path)
 result_model = model.run(["bise_net_v2_1", "bise_net_v2_1_1"], {"input_1": input_image})
 bin_pred = np.squeeze(result_model[0], axis=0)
 inst = np.squeeze(result_model[1], axis=0)
